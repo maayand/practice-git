@@ -1,20 +1,13 @@
 'use strict'
 
 function onBallClick(el){
-    // console.log( el.style )
-    // var currentWidth = el.offsetWidth
-    // var currentHeight = el.offsetHeight
-    
-    // var newWidth = currentWidth + 50
-    // var newHeight  = currentHeight + 50
-    // if(newWidth >= 400){
-    //     newHeight = 100
-    //     newWidth = 100
-    // }
-    var currentWidth = getRandomInt(20, 60)
-   
-    el.style.width = currentWidth + 'px'
-    el.style.height = currentWidth + 'px'
-
-    el.innerText = currentWidth;
+    var randomDiff = getRandomInt(20, 60);
+    var currentWidth = el.offsetWidth;
+    var newWidth = currentWidth + randomDiff;
+    if (newWidth > 400) {
+        newWidth = 100;
+    }
+    el.style.width = newWidth + 'px';
+    el.style.height = newWidth + 'px';
+    el.innerText = newWidth;
 }
