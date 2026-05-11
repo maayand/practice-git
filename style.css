@@ -4,21 +4,26 @@ body{
 h1{
     color: white;
 }
-.ball{
+.ball, .ball2{
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 100px;
-    height: 100px;
-    color: white;
-    background-color: blueviolet;
-  
     border-radius: 50%;
     margin:  0 auto;
     font-size: 20px;
     font-weight: bold;
+    width: 100px;
+    height: 100px;
+    color: white;
 
     transition: 1s ease-in;
     cursor: pointer;
+}
+.ball{
+    background-color: blueviolet;
+}
+.ball2{
+    background-color: rgb(255, 255, 79);
+    margin-top: 10px;
 }
