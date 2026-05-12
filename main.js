@@ -13,3 +13,20 @@ function onBallClick(el, maxDiameter){
     el.style.height = newWidth + 'px';
     el.innerText = newWidth;
 }
+function onThiredBallClick(){
+    var elBall1 = document.querySelector('.ball-1')
+    var elBall2 = document.querySelector('.ball-2')
+
+    var ball1Color = elBall1.style.backgroundColor || 'red'
+    var ball1Width = elBall1.style.width || '100px'
+
+    elBall1.style.backgroundColor = elBall2.style.backgroundColor || 'blue'
+    elBall1.style.width = elBall2.style.width || '200px'
+    elBall1.style.height = elBall2.style.width || '200px'
+    elBall1.innerText = parseInt(elBall1.style.width)
+
+    elBall2.style.backgroundColor = ball1Color 
+    elBall2.style.width = ball1Width
+    elBall2.style.height = ball1Width
+    elBall2.innerText = parseInt(elBall2.style.width)
+}
