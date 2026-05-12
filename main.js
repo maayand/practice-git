@@ -53,3 +53,15 @@ function onChangeBackgroundColor(){
     var randomColor = getRandomColor();
     document.body.style.backgroundColor = randomColor
 }
+function onResetGame(){
+    document.body.style.backgroundColor = 'black'
+    var allBalls = document.querySelectorAll('[class^="ball-"]')
+
+    allBalls.forEach(ball =>{
+        ball.style.width = '100px'
+        ball.style.height = '100px'
+        ball.innerText = '100'
+        ball.style.backgroundColor = ''
+    })
+
+}

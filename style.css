@@ -4,7 +4,7 @@ body{
 h1{
     color: white;
 }
-.ball-1, .ball-2, .ball-3, .ball-4, .ball-5{
+.ball-1, .ball-2, .ball-3, .ball-4, .ball-5, .ball-6{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,10 +32,15 @@ h1{
     margin-top: 10px;
 }
 .ball-4 {
-    background-color: #3cdce7; /* אדום */
+    background-color: #3cdce7; 
     margin-top: 10px;
 }
 .ball-5 {
-    background-color: #53e73c; /* אדום */
+    background-color: #53e73c; 
     margin-top: 10px;
+}
+.ball-6{
+    background-color: #ffffff; 
+    margin-top: 10px;
+    color: black;
 }
