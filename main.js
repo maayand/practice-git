@@ -30,3 +30,22 @@ function onThiredBallClick(){
     elBall2.style.height = ball1Width
     elBall2.innerText = parseInt(elBall2.style.width)
 }
+
+function onFourthBallClick(){
+    var elBall1 = document.querySelector('.ball-1')
+    var elBall2 = document.querySelector('.ball-2')
+
+    var balls = [elBall1, elBall2]
+
+    balls.forEach(ball=>{
+        var randomDiff = getRandomInt(20,60)
+        var currentWidth = ball.offsetWidth
+        var newWidth = currentWidth - randomDiff;
+        if(newWidth < 100){
+            newWidth = 100
+        }
+        ball.style.width = newWidth + 'px'
+        ball.style.height = newWidth + 'px'
+        ball.innerText = newWidth
+    })
+}
