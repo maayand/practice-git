@@ -1,11 +1,11 @@
 'use strict'
 
-function onBallClick(el){
+function onBallClick(el, maxDiameter){
     var randomDiff = getRandomInt(20, 60);
     var randomColor = getRandomColor()
     var currentWidth = el.offsetWidth;
     var newWidth = currentWidth + randomDiff;
-    if (newWidth > 400) {
+    if (newWidth > maxDiameter) {
         newWidth = 100;
     }
     el.style.background = randomColor;
