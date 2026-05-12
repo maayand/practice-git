@@ -49,3 +49,7 @@ function onFourthBallClick(){
         ball.innerText = newWidth
     })
 }
+function onChangeBackgroundColor(){
+    var randomColor = getRandomColor();
+    document.body.style.backgroundColor = randomColor
+}
