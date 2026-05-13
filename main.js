@@ -6,6 +6,9 @@ var gIntervalCount = 0
 var gStateHistory = []
 var gRedoStack = []
 var gMoveCount = 0 
+var gStartTime
+var gTimerInterval
+var gIsTimerRunning = false
 
 function onInit(){
     saveState()
@@ -78,6 +81,7 @@ function onResetGame(){
         ball.innerText = '100'
         ball.style.backgroundColor = ''
     })
+    resetTimer()
     saveState()
 }
 function startHoverTimer(){
@@ -127,6 +131,9 @@ function saveState() {
             innerText: ball.innerText
         })
     })
+    if (gStateHistory.length > 0 && !gIsTimerRunning) {
+        startTimer()
+    }
     gStateHistory.push(JSON.parse(JSON.stringify(state)))
     gRedoStack = [];
     updateUndoRedoButtons()
@@ -175,4 +182,19 @@ function updateTitle(){
     gMoveCount = gStateHistory.length - 1
      if(gMoveCount < 0 ) gMoveCount = 0
     document.title = 'Moves ' + gMoveCount
+}
+function startTimer() {
+    if (gIsTimerRunning) return 
+    gIsTimerRunning = true
+    gStartTime = Date.now()
+    
+    gTimerInterval = setInterval(() => {
+        var elapsedTime = ((Date.now() - gStartTime) / 1000).toFixed(1)
+        document.querySelector('.timer').innerText = 'Time: ' + elapsedTime + 's'
+    }, 100)
+}
+function resetTimer() {
+    clearInterval(gTimerInterval)
+    gIsTimerRunning = false
+    document.querySelector('.timer').innerText = 'Time: 0s'
 }
