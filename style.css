@@ -44,3 +44,8 @@ h1{
     margin-top: 10px;
     color: black;
 }
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}

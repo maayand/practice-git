@@ -11,7 +11,7 @@ function onInit(){
 }
 
 function onBallClick(el, maxDiameter){
-    var randomDiff = getRandomInt(20, 60);
+    var randomDiff = getRandomInt(20, 60)
     var randomColor = getRandomColor()
     var currentWidth = el.offsetWidth || 100
     var newWidth = currentWidth + randomDiff
@@ -52,7 +52,7 @@ function onFourthBallClick(){
     balls.forEach(ball=>{
         var randomDiff = getRandomInt(20,60)
         var currentWidth = ball.offsetWidth 
-        var newWidth = currentWidth - randomDiff;
+        var newWidth = currentWidth - randomDiff
         if(newWidth < 100){
             newWidth = 100
         }
@@ -128,18 +128,19 @@ function saveState() {
     })
     gStateHistory.push(JSON.parse(JSON.stringify(state)))
     gRedoStack = [];
+    updateUndoRedoButtons()
 }
 
 function renderState(state){
     if(!state) return
     document.body.style.backgroundColor = state.bodyBgColor;
     state.balls.forEach(ballState=>{
-        var elBall = document.querySelector('.' + ballState.className.split(' ')[0]);
+        var elBall = document.querySelector('.' + ballState.className.split(' ')[0])
         if (elBall) {
-            elBall.style.width = ballState.width;
-            elBall.style.height = ballState.height;
-            elBall.style.backgroundColor = ballState.backgroundColor;
-            elBall.innerText = ballState.innerText;
+            elBall.style.width = ballState.width
+            elBall.style.height = ballState.height
+            elBall.style.backgroundColor = ballState.backgroundColor
+            elBall.innerText = ballState.innerText
         }
     })
 }
@@ -147,13 +148,22 @@ function onUndo() {
     if (gStateHistory.length <= 1) return;
     var currentState = gStateHistory.pop();
     gRedoStack.push(currentState);
-    var prevState = gStateHistory[gStateHistory.length - 1];
-    renderState(prevState);
+    var prevState = gStateHistory[gStateHistory.length - 1]
+    renderState(prevState)
+    updateUndoRedoButtons()
 }
 
 function onRedo() {
-    if (gRedoStack.length === 0) return;
-    var nextState = gRedoStack.pop();
-    gStateHistory.push(nextState);
-    renderState(nextState);
+    if (gRedoStack.length === 0) return
+    var nextState = gRedoStack.pop()
+    gStateHistory.push(nextState)
+    renderState(nextState)
+    updateUndoRedoButtons()
+}
+
+function updateUndoRedoButtons() {
+    var elUndoBtn = document.getElementById('btn-undo')
+    var elRedoBtn = document.getElementById('btn-redo')
+    elUndoBtn.disabled = (gStateHistory.length <= 1)
+    elRedoBtn.disabled = (gRedoStack.length === 0)
 }
