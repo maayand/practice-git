@@ -17,7 +17,7 @@ h1{
     height: 100px;
     color: white;
 
-    transition: 1s ease-in;
+    transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s;
     cursor: pointer;
 }
 .ball-1{

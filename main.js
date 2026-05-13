@@ -1,16 +1,20 @@
 'use strict'
 
+var gHoverTimeout
+var gAutoClickInterval
+var gIntervalCount = 0
+
 function onBallClick(el, maxDiameter){
     var randomDiff = getRandomInt(20, 60);
     var randomColor = getRandomColor()
-    var currentWidth = el.offsetWidth;
-    var newWidth = currentWidth + randomDiff;
+    var currentWidth = el.offsetWidth || 100
+    var newWidth = currentWidth + randomDiff
     if (newWidth > maxDiameter) {
         newWidth = 100;
     }
     el.style.background = randomColor;
-    el.style.width = newWidth + 'px';
-    el.style.height = newWidth + 'px';
+    el.style.width = newWidth + 'px'
+    el.style.height = newWidth + 'px'
     el.innerText = newWidth;
 }
 function onThiredBallClick(){
@@ -39,7 +43,7 @@ function onFourthBallClick(){
 
     balls.forEach(ball=>{
         var randomDiff = getRandomInt(20,60)
-        var currentWidth = ball.offsetWidth
+        var currentWidth = ball.offsetWidth 
         var newWidth = currentWidth - randomDiff;
         if(newWidth < 100){
             newWidth = 100
@@ -64,4 +68,35 @@ function onResetGame(){
         ball.style.backgroundColor = ''
     })
 
+}
+function startHoverTimer(){
+    stopHoverTimer()
+    gHoverTimeout = setTimeout(()=>{
+        gIntervalCount = 0
+       gAutoClickInterval = setInterval(()=>{
+        autoClickBalls()
+        gIntervalCount++
+        if (gIntervalCount >= 10) {
+            stopHoverTimer();
+        }
+       },2000)
+    },2000)
+}
+
+function stopHoverTimer(){
+    clearInterval(gAutoClickInterval)
+    clearTimeout(gHoverTimeout)
+    gIntervalCount = 0
+}
+
+function autoClickBalls(){
+    var elBall1 = document.querySelector('.ball-1');
+    var elBall2 = document.querySelector('.ball-2');
+
+    onBallClick(elBall1, 300)
+    onBallClick(elBall2, 400)
+
+    onThiredBallClick()
+    onFourthBallClick()
+    
 }
