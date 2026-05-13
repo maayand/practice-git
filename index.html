@@ -6,7 +6,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css"> 
 </head>
-<body>
+<body onload="onInit()">
+    <div class="controls">
+        <button onclick="onUndo()">Undo</button>
+        <button onclick="onRedo()">Redo</button>
+    </div>
     <h1>The Ball Game</h1>
     <div class="ball-1" onclick="onBallClick(this,300)">100</div>
     <div class="ball-2" onclick="onBallClick(this,400)">100</div>

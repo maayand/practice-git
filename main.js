@@ -3,6 +3,12 @@
 var gHoverTimeout
 var gAutoClickInterval
 var gIntervalCount = 0
+var gStateHistory = []
+var gRedoStack = []
+
+function onInit(){
+    saveState()
+}
 
 function onBallClick(el, maxDiameter){
     var randomDiff = getRandomInt(20, 60);
@@ -16,6 +22,7 @@ function onBallClick(el, maxDiameter){
     el.style.width = newWidth + 'px'
     el.style.height = newWidth + 'px'
     el.innerText = newWidth;
+    saveState()
 }
 function onThiredBallClick(){
     var elBall1 = document.querySelector('.ball-1')
@@ -33,6 +40,7 @@ function onThiredBallClick(){
     elBall2.style.width = ball1Width
     elBall2.style.height = ball1Width
     elBall2.innerText = parseInt(elBall2.style.width)
+    saveState()
 }
 
 function onFourthBallClick(){
@@ -52,10 +60,12 @@ function onFourthBallClick(){
         ball.style.height = newWidth + 'px'
         ball.innerText = newWidth
     })
+    saveState()
 }
 function onChangeBackgroundColor(){
     var randomColor = getRandomColor();
     document.body.style.backgroundColor = randomColor
+    saveState()
 }
 function onResetGame(){
     document.body.style.backgroundColor = 'black'
@@ -67,7 +77,7 @@ function onResetGame(){
         ball.innerText = '100'
         ball.style.backgroundColor = ''
     })
-
+    saveState()
 }
 function startHoverTimer(){
     stopHoverTimer()
@@ -99,4 +109,51 @@ function autoClickBalls(){
     onThiredBallClick()
     onFourthBallClick()
     
+}
+function saveState() {
+    var state = {
+        balls : [],
+        bodyBgColor: document.body.style.backgroundColor || 'black' 
+    }
+    var allBalls = document.querySelectorAll('[class^="ball-"]')
+
+    allBalls.forEach(ball =>{
+        state.balls.push({
+            className : ball.className,
+            width: ball.style.width || '100px',
+            height: ball.style.height || '100px',
+            backgroundColor: ball.style.background,
+            innerText: ball.innerText
+        })
+    })
+    gStateHistory.push(JSON.parse(JSON.stringify(state)))
+    gRedoStack = [];
+}
+
+function renderState(state){
+    if(!state) return
+    document.body.style.backgroundColor = state.bodyBgColor;
+    state.balls.forEach(ballState=>{
+        var elBall = document.querySelector('.' + ballState.className.split(' ')[0]);
+        if (elBall) {
+            elBall.style.width = ballState.width;
+            elBall.style.height = ballState.height;
+            elBall.style.backgroundColor = ballState.backgroundColor;
+            elBall.innerText = ballState.innerText;
+        }
+    })
+}
+function onUndo() {
+    if (gStateHistory.length <= 1) return;
+    var currentState = gStateHistory.pop();
+    gRedoStack.push(currentState);
+    var prevState = gStateHistory[gStateHistory.length - 1];
+    renderState(prevState);
+}
+
+function onRedo() {
+    if (gRedoStack.length === 0) return;
+    var nextState = gRedoStack.pop();
+    gStateHistory.push(nextState);
+    renderState(nextState);
 }
