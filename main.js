@@ -5,6 +5,7 @@ var gAutoClickInterval
 var gIntervalCount = 0
 var gStateHistory = []
 var gRedoStack = []
+var gMoveCount = 0 
 
 function onInit(){
     saveState()
@@ -129,6 +130,8 @@ function saveState() {
     gStateHistory.push(JSON.parse(JSON.stringify(state)))
     gRedoStack = [];
     updateUndoRedoButtons()
+
+    updateTitle()
 }
 
 function renderState(state){
@@ -166,4 +169,10 @@ function updateUndoRedoButtons() {
     var elRedoBtn = document.getElementById('btn-redo')
     elUndoBtn.disabled = (gStateHistory.length <= 1)
     elRedoBtn.disabled = (gRedoStack.length === 0)
+}
+
+function updateTitle(){
+    gMoveCount = gStateHistory.length - 1
+     if(gMoveCount < 0 ) gMoveCount = 0
+    document.title = 'Moves ' + gMoveCount
 }
